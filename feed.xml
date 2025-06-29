@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Student Productivity App Updates</title>
+    <description>Latest news and updates from Student Productivity App</description>
+    <link>https://studentsproductivityapp.netlify.app/</link>
+    <atom:link href="https://studentsproductivityapp.netlify.app/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 23 May 2023 12:00:00 +0000</pubDate>
+    <lastBuildDate>Tue, 23 May 2023 12:00:00 +0000</lastBuildDate>
+    <language>en-US</language>
+    <item>
+      <title>Student Productivity App Launch</title>
+      <description>We've launched our new productivity app designed specifically for students! Manage tasks, track marks, and get AI assistance with your studies.</description>
+      <link>https://studentsproductivityapp.netlify.app/</link>
+      <guid isPermaLink="true">https://studentsproductivityapp.netlify.app/</guid>
+      <pubDate>Tue, 23 May 2023 12:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss> 

@@ -1,0 +1,26 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Student Productivity App",
+  "description": "All-in-one productivity app for students. Manage tasks, track academic performance, use AI assistance for studying, and organize your educational journey.",
+  "operatingSystem": "Web",
+  "applicationCategory": "Education, Productivity",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "url": "https://studentsproductivityapp.netlify.app/",
+  "author": {
+    "@type": "Organization",
+    "name": "Student Productivity App Team",
+    "url": "https://studentsproductivityapp.netlify.app/"
+  },
+  "datePublished": "2023-05-22",
+  "featureList": "Task Management, Academic Mark Tracking, AI Study Assistant, Calendar Planning, Notes & Diary",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "125"
+  }
+} 

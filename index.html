@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Student Productivity App - Task Management, Marks Tracker & AI Chat</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="All-in-one productivity app for students. Manage tasks, track academic performance, use AI assistance for studying, and organize your educational journey.">
+    <meta name="keywords" content="student productivity, task management, marks tracker, academic planner, student app, educational tool">
+    <meta name="author" content="Student Productivity App Team">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Student Productivity App">
+    <meta property="og:description" content="All-in-one productivity app for students. Manage tasks, track academic performance, and get AI assistance.">
+    <meta property="og:url" content="https://studentsproductivityapp.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://studentsproductivityapp.netlify.app/images/app-preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Student Productivity App">
+    <meta name="twitter:description" content="All-in-one productivity app for students">
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://studentsproductivityapp.netlify.app/">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Student Productivity App Updates" href="https://studentsproductivityapp.netlify.app/feed.xml">
+    <!-- Add to <head> -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1976d2">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-indigo-600 text-white p-4 shadow-md">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold">Student Productivity App</h1>
+                <div id="user-status">
+                    <div class="flex items-center">
+                        <span id="user-email" class="mr-2 text-indigo-100 text-sm responsive-hide"></span>
+                        <button id="logout-btn" class="bg-indigo-700 hover:bg-indigo-800 px-3 py-1 rounded text-sm responsive-hide">Logout</button>
+                        <!-- SVG Logout Button for small screens -->
+                        <button id="logout-btn-svg" class="hidden bg-indigo-700 hover:bg-indigo-800 p-1 rounded responsive-show">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto p-4 pb-20">
+            <!-- App Dashboard -->
+            <div id="app-dashboard">
+                <!-- To-Do List Module -->
+                <div id="todo-module" class="mb-8">
+                    <div class="text-center py-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Task Manager</h2>
+                        <p class="text-gray-600 mt-1">Organize your academic tasks efficiently</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Task Creation Form -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Create New Task</h3>
+                                <form id="task-form" class="space-y-4">
+                                    <div>
+                                        <label for="task-title" class="block text-gray-700 mb-1">Title</label>
+                                        <input type="text" id="task-title" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="task-description" class="block text-gray-700 mb-1">Description</label>
+                                        <textarea id="task-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="task-hours" class="block text-gray-700 mb-1">Hours to Complete</label>
+                                        <input type="number" id="task-hours" min="1" max="100" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="task-category" class="block text-gray-700 mb-1">Category</label>
+                                        <select id="task-category" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                            <option value="homework">Homework</option>
+                                            <option value="exam">Exam</option>
+                                            <option value="project">Project</option>
+                                            <option value="reading">Reading</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Add Task</button>
+                                </form>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <!-- <div id="notification-settings" class="bg-white p-6 rounded-lg shadow-md mt-6">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Notification Settings</h3>
+                                 Notification settings will be populated by JavaScript
+                            </div> -->
+                        </div>
+
+                        <!-- Task Display Area -->
+                        <div class="lg:col-span-2">
+                            <!-- View Controls -->
+                            <div class="bg-white p-4 rounded-lg shadow-md mb-4 flex flex-wrap justify-between items-center">
+                                <!-- View Toggle -->
+                                <div class="flex items-center space-x-4 mb-2 sm:mb-0">
+                                    <label class="text-gray-700">View:</label>
+                                    <div class="flex rounded-md overflow-hidden border border-gray-300">
+                                        <button id="list-view-btn" class="px-4 py-2 bg-indigo-600 text-white font-medium">List</button>
+                                        <button id="calendar-view-btn" class="px-4 py-2 bg-gray-100 text-gray-700 font-medium">Calendar</button>
+                                    </div>
+                                </div>
+
+                                <!-- Download Tasks Button -->
+                                <button id="download-all-tasks-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    Download All Tasks
+                                </button>
+                                
+                                <!-- Time Period Selector -->
+                                <!-- <div class="flex items-center space-x-4">
+                                    <label class="text-gray-700">Period:</label>
+                                    <select id="time-period-selector" class="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div> -->
+                            </div>
+
+                            <!-- List View -->
+                            <div id="list-view" class="bg-white p-4 rounded-lg shadow-md mb-4 max-h-[500px] overflow-y-auto">
+                                <div id="task-list" class="space-y-2">
+                                    <!-- Task items will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Calendar View (hidden initially) -->
+                            <div id="calendar-view" class="bg-white p-4 rounded-lg shadow-md mb-4 max-h-[500px] overflow-y-auto hidden">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Calendar</h3>
+                                <div class="mb-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <button id="prev-month" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-md text-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                            Prev
+                                        </button>
+                                        <h4 id="calendar-month-year" class="text-md font-medium">Month Year</h4>
+                                        <button id="next-month" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-md text-sm">
+                                            Next
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="grid grid-cols-7 gap-1 text-center text-xs font-medium text-gray-500 mb-1">
+                                        <div>Sun</div>
+                                        <div>Mon</div>
+                                        <div>Tue</div>
+                                        <div>Wed</div>
+                                        <div>Thu</div>
+                                        <div>Fri</div>
+                                        <div>Sat</div>
+                                    </div>
+                                    <div id="calendar-days" class="grid grid-cols-7 gap-1">
+                                        <!-- Calendar days will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Reminders for selected date -->
+                                <div id="date-reminders" class="mt-4 hidden">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h4 id="selected-date" class="text-md font-medium">Selected Date</h4>
+                                        <button id="add-reminder-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-md text-sm">
+                                            Add Reminder
+                                        </button>
+                                    </div>
+                                    <div id="reminders-list" class="max-h-[200px] overflow-y-auto">
+                                        <!-- Reminders will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Add Reminder Form (hidden initially) -->
+                                <div id="reminder-form" class="mt-4 hidden">
+                                    <h4 class="text-md font-medium mb-2">Add Reminder</h4>
+                                    <form id="add-reminder-form" class="space-y-3">
+                                        <div>
+                                            <label for="reminder-title" class="block text-gray-700 mb-1 text-sm">Title</label>
+                                            <input type="text" id="reminder-title" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                        </div>
+                                        <div>
+                                            <label for="reminder-description" class="block text-gray-700 mb-1 text-sm">Description</label>
+                                            <textarea id="reminder-description" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Save</button>
+                                            <button type="button" id="cancel-reminder-btn" class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded font-medium transition duration-300">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Notes & Diary Section -->
+                            <div id="notes-section" class="bg-white p-4 rounded-lg shadow-md mb-4">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Notes & Diary</h3>
+                                <form id="notes-form" class="space-y-3">
+                                    <div>
+                                        <label for="note-title" class="block text-gray-700 mb-1 text-sm">Title</label>
+                                        <input type="text" id="note-title" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="note-description" class="block text-gray-700 mb-1 text-sm">Description</label>
+                                        <textarea id="note-description" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Save Note</button>
+                                        <button type="reset" class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded font-medium transition duration-300">Reset</button>
+                                    </div>
+                                </form>
+                                
+                                <div id="notes-list" class="mt-6 space-y-4 max-h-[400px] overflow-y-auto">
+                                    <!-- Notes will be populated here by JavaScript -->
+                                    <!-- Each note will have a download button added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Timer & Stopwatch Section -->
+                            <div id="timer-section" class="bg-white p-4 rounded-lg shadow-md mb-4">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Timer & Stopwatch</h3>
+                                
+                                <!-- Timer Type Selection -->
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Select Timer Type:</label>
+                                    <div class="flex space-x-4">
+                                        <button id="timer-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm">Timer</button>
+                                        <button id="stopwatch-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm">Stopwatch</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Timer Settings (shown when Timer selected) -->
+                                <div id="timer-settings" class="mb-4">
+                                    <div class="grid grid-cols-3 gap-2 mb-3">
+                                        <div>
+                                            <label for="hours-input" class="block text-gray-700 mb-1 text-sm">Hours</label>
+                                            <input type="number" id="hours-input" min="0" max="23" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label for="minutes-input" class="block text-gray-700 mb-1 text-sm">Minutes</label>
+                                            <input type="number" id="minutes-input" min="0" max="59" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                        <div>
+                                            <label for="seconds-input" class="block text-gray-700 mb-1 text-sm">Seconds</label>
+                                            <input type="number" id="seconds-input" min="0" max="59" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="timer-label" class="block text-gray-700 mb-1 text-sm">What are you timing?</label>
+                                        <input type="text" id="timer-label" placeholder="e.g., Study session, Assignment work" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                </div>
+                                
+                                <!-- Stopwatch Settings (hidden initially) -->
+                                <div id="stopwatch-settings" class="mb-4 hidden">
+                                    <div class="mb-3">
+                                        <label for="stopwatch-label" class="block text-gray-700 mb-1 text-sm">What are you tracking?</label>
+                                        <input type="text" id="stopwatch-label" placeholder="e.g., Reading time, Problem solving" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                </div>
+                                
+                                <!-- Display Area -->
+                                <div id="timer-display" class="text-center py-4 mb-3">
+                                    <div class="text-4xl font-mono font-bold text-indigo-600">00:00:00</div>
+                                    <p id="timer-status-label" class="text-gray-600 mt-2">Ready</p>
+                                </div>
+                                
+                                <!-- Control Buttons -->
+                                <div class="flex justify-center space-x-4">
+                                    <button id="start-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">Start</button>
+                                    <button id="pause-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md hidden">Pause</button>
+                                    <button id="resume-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hidden">Resume</button>
+                                    <button id="reset-btn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Reset</button>
+                                </div>
+                                
+                                <!-- Timer History -->
+                                <div class="mt-4">
+                                    <h4 class="font-medium text-gray-700 mb-2">Timer History</h4>
+                                    <div id="timer-history" class="max-h-[150px] overflow-y-auto text-sm">
+                                        <!-- Timer history will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reward System Display -->
+                            <div id="reward-display" class="bg-white p-4 rounded-lg shadow-md">
+                                <!-- Reward information will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marks Tracker Module -->
+                <div id="marks-module" class="mb-8 hidden">
+                    <div class="text-center py-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Marks Tracker</h2>
+                        <p class="text-gray-600 mt-1">Track and analyze your academic performance</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Subject & Mark Entry Forms -->
+                        <div class="lg:col-span-1">
+                            <!-- Subject Form -->
+                            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Add New Subject</h3>
+                                <form id="subject-form" class="space-y-4">
+                                    <div>
+                                        <label for="subject-name" class="block text-gray-700 mb-1">Subject Name</label>
+                                        <input type="text" id="subject-name" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="subject-code" class="block text-gray-700 mb-1">Subject Code</label>
+                                        <input type="text" id="subject-code" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="subject-max-marks" class="block text-gray-700 mb-1">Maximum Marks</label>
+                                        <input type="number" id="subject-max-marks" min="1" max="1000" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Add Subject</button>
+                                        <button type="button" id="reset-subject-form-btn" class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded font-medium transition duration-300">Reset</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Mark Entry Form -->
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Add New Mark</h3>
+                                <form id="mark-entry-form" class="space-y-4">
+                                    <div>
+                                        <label for="mark-subject" class="block text-gray-700 mb-1">Subject</label>
+                                        <select id="mark-subject" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                            <option value="">Select Subject</option>
+                                            <!-- Subjects will be populated by JavaScript -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="mark-value" class="block text-gray-700 mb-1">Mark Value</label>
+                                        <input type="number" id="mark-value" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="exam-type" class="block text-gray-700 mb-1">Exam Type</label>
+                                        <select id="exam-type" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                            <option value="">Select Type</option>
+                                            <option value="Unit Test">Unit Test</option>
+                                            <option value="Quarterly">Quarterly</option>
+                                            <option value="Half Yearly">Half Yearly</option>
+                                            <option value="Annually">Annually</option>
+                                            <option value="Mid-Term">Mid-Term</option>
+                                            <option value="Revision Test">Revision Test</option>
+                                        </select>
+                                    </div>
+                                    <div id="exam-number-container" class="hidden">
+                                        <label for="exam-number" class="block text-gray-700 mb-1">Test Number</label>
+                                        <input type="number" id="exam-number" min="1" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="exam-date" class="block text-gray-700 mb-1">Exam Date</label>
+                                        <input type="date" id="exam-date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Add Mark</button>
+                                        <button type="button" id="reset-mark-form-btn" class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded font-medium transition duration-300">Reset</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Performance Display Area -->
+                        <div class="lg:col-span-2">
+                            <!-- Subjects List -->
+                            <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Your Subjects</h3>
+                                <div id="subjects-list" class="max-h-[200px] overflow-y-auto">
+                                    <!-- Subjects will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Performance Dashboard Tabs -->
+                            <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="text-lg font-semibold text-gray-800">Performance Dashboard</h3>
+                                    <div class="flex gap-2">
+                                        <button id="download-all-marks-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                            Download All
+                                        </button>
+                                        <button id="analyze-performance-btn" style="display: none;" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm">Analyze My Performance</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Tab Navigation -->
+                                <div class="border-b border-gray-200 mb-4">
+                                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
+                                        <li class="mr-2">
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-indigo-600 text-indigo-600 active relative" data-tab="all-tests">
+                                                All Tests
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full"></span>
+                                            </a>
+                                        </li>
+                                        <li class="mr-2">
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600 relative" data-tab="unit-tests">
+                                                Unit Tests
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full opacity-0"></span>
+                                            </a>
+                                        </li>
+                                        <li class="mr-2">
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600 relative" data-tab="quarterly">
+                                                Quarterly
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full opacity-0"></span>
+                                            </a>
+                                        </li>
+                                        <li class="mr-2">
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600 relative" data-tab="half-yearly">
+                                                Half Yearly
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full opacity-0"></span>
+                                            </a>
+                                        </li>
+                                        <li class="mr-2">
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600 relative" data-tab="annually">
+                                                Annually
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full opacity-0"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="performance-tab inline-block p-2 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-600 relative" data-tab="revision-tests">
+                                                Revision Tests
+                                                <span class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-600 rounded-full opacity-0"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Tab Content -->
+                                <div id="performance-tabs-content">
+                                    <div id="all-tests-tab" class="performance-tab-content">
+                                        <div id="performance-dashboard" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Performance data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="unit-tests-tab" class="performance-tab-content hidden">
+                                        <div id="unit-tests-content" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Unit test data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="quarterly-tab" class="performance-tab-content hidden">
+                                        <div id="quarterly-content" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Quarterly test data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="half-yearly-tab" class="performance-tab-content hidden">
+                                        <div id="half-yearly-content" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Half yearly test data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="annually-tab" class="performance-tab-content hidden">
+                                        <div id="annually-content" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Annual test data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="revision-tests-tab" class="performance-tab-content hidden">
+                                        <div id="revision-tests-content" class="max-h-[300px] overflow-y-auto">
+                                            <!-- Revision test data will be populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Statistics -->
+                            <div id="statistics-container" class="max-h-[300px] overflow-y-auto">
+                                <!-- Statistics will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Chat Module -->
+                <div id="chat-module" class="mb-8 hidden">
+                    <div class="text-center py-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Educational AI Chat</h2>
+                        <p class="text-gray-600 mt-1">Get answers to your academic questions</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Chat Interface -->
+                        <div class="lg:col-span-2">
+                            <div id="chat-container">
+                                <!-- Messages Area -->
+                                <div id="messages-list">
+                                    <!-- Welcome message -->
+                                    <div class="message message-ai">
+                                        <div class="message-bubble">
+                                            <p>👋 Hello! I'm your educational AI assistant. How can I help you with your studies today?</p>
+                                            <div class="message-meta">
+                                                <button class="save-response-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                                    </svg> 
+                                                    Save
+                                                </button>
+                                                <span class="message-time">Just now</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Messages will be populated by JavaScript -->
+                                </div>
+                                
+                                <!-- Input Area -->
+                                <div class="chat-input-container">
+                                    <div class="chat-input-form">
+                                        <input type="text" id="message-input" class="chat-input" placeholder="Ask any educational question...">
+                                        <button id="send-message-btn" class="chat-send-btn">
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="lg:col-span-1">
+                            <!-- Topic Suggestions -->
+                            <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Suggested Topics</h3>
+                                <div id="topic-suggestions" class="topic-suggestions">
+                                    <!-- Topic suggestions will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Saved Responses -->
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-800">Saved Responses</h3>
+                                <div id="saved-responses-section" class="saved-responses">
+                                    <!-- Saved responses will be populated by JavaScript -->
+                                    <p class="text-gray-500 text-sm p-3">No saved responses yet</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Response View Modal (hidden by default) -->
+                            <div id="response-modal" class="hidden">
+                                <div class="bg-white">
+                                    <div class="modal-header">
+                                        <h3 class="text-lg font-semibold text-gray-800">Saved Response</h3>
+                                        <button id="close-modal-btn" class="text-gray-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div id="modal-response-content"></div>
+                                    <div class="modal-footer">
+                                        <button id="use-response-btn">
+                                            Use This Response
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Module -->
+                <div id="profile-module" class="mb-8 hidden">
+                    <div class="text-center py-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Profile</h2>
+                        <p class="text-gray-600 mt-1">Manage your account settings</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Profile Information -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Account Information</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-gray-700 mb-1">Email</label>
+                                        <p id="profile-email" class="px-3 py-2 border border-gray-200 rounded bg-gray-50 text-gray-800"></p>
+                                    </div>
+                                    
+                                    <button id="logout-profile-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition duration-300">Logout</button>
+                                    <button id="installBtn" style="display:none;" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-medium transition duration-300 mt-2">Install App</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                                <h3 class="text-lg font-semibold mb-4 text-gray-800">Download Your Data</h3>
+                                <p class="text-gray-600 mb-4">Download all your data from the application in document format.</p>
+                                <button id="download-all-data-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    Download All Data
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-lg font-semibold mb-4 text-red-600">Delete Account</h3>
+                                <p class="text-gray-600 mb-4">This will permanently delete your account and all your data from our servers. This action cannot be undone.</p>
+                                <button id="delete-account-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    Delete Account
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation Bar (hidden initially) -->
+        <nav id="bottom-nav" class="bg-gradient-to-r from-indigo-50 via-white to-indigo-50 shadow-lg py-3 hidden fixed bottom-0 left-0 right-0 z-10 border-t border-indigo-100">
+            <div class="container mx-auto px-4">
+                <ul class="flex justify-around items-center">
+                    <li class="text-center relative">
+                        <a href="#" class="nav-link flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out" data-section="todo">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                <span class="active-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full opacity-0 transition-all duration-300"></span>
+                            </div>
+                            <span class="text-xs mt-1 font-medium transition-colors duration-300">To-Do</span>
+                        </a>
+                    </li>
+                    <li class="text-center relative">
+                        <a href="#" class="nav-link flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out" data-section="marks">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                <span class="active-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full opacity-0 transition-all duration-300"></span>
+                            </div>
+                            <span class="text-xs mt-1 font-medium transition-colors duration-300">Marks</span>
+                        </a>
+                    </li>
+                    <li class="text-center relative">
+                        <a href="#" class="nav-link flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out" data-section="chat">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                                <span class="active-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full opacity-0 transition-all duration-300"></span>
+                            </div>
+                            <span class="text-xs mt-1 font-medium transition-colors duration-300">AI Chat</span>
+                        </a>
+                    </li>
+                    <li class="text-center relative">
+                        <a href="#" class="nav-link flex flex-col items-center px-4 py-2 rounded-lg transition-all duration-300 ease-in-out" data-section="profile">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <span class="active-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full opacity-0 transition-all duration-300"></span>
+                            </div>
+                            <span class="text-xs mt-1 font-medium transition-colors duration-300">Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="./js/firebase-config.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/todo.js"></script>
+    <script src="./js/calendar.js"></script>
+    <script src="./js/marks.js"></script>
+    <script src="./js/chat.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/app.js"></script>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Student Productivity App",
+      "description": "All-in-one productivity app for students. Manage tasks, track academic performance, use AI assistance for studying, and organize your educational journey.",
+      "operatingSystem": "Web",
+      "applicationCategory": "Education, Productivity",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "url": "https://studentsproductivityapp.netlify.app/",
+      "author": {
+        "@type": "Organization",
+        "name": "Student Productivity App Team",
+        "url": "https://studentsproductivityapp.netlify.app/"
+      },
+      "datePublished": "2023-05-22",
+      "featureList": "Task Management, Academic Mark Tracking, AI Study Assistant, Calendar Planning, Notes & Diary",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "125"
+      }
+    }
+    </script>
+    <!-- Register service worker at end of <body> -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
+    <script src="/js/pwa-install.js"></script>
+</body>
+</html>
+
+
