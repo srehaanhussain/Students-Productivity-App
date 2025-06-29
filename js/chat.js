@@ -203,8 +203,8 @@ function initTopicSuggestions() {
 
 // DeepSeek API integration via OpenRouter
 async function callOpenAI(message) {
-    const API_KEY = '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';
-    const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+    const API_KEY = '';
+    const API_URL = '';
     
     try {
         const response = await fetch(API_URL, {
